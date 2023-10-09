@@ -29,15 +29,28 @@ function defineListeners() {
     stopButton.onclick = () => {
         stop();
     }
+
+    // for changing the frequency
+    const frequencySlider = document.querySelector("#freqSlider");
+    // when the slider changes, update the oscillator frequency
+    frequencySlider.oninput = (event) => {
+        osc.frequency.value = frequencySlider.value;
+        // update the value of the span element
+        let span = document.querySelector("#spanFreq")
+        span.innerHTML = frequencySlider.value;
+    }
+
+    // for changing the volume
+    // for changing the frequency
+    const volSlider = document.querySelector("#volSlider");
+    // when the slider changes, update the oscillator frequency
+    volSlider.oninput = (event) => {
+        gainNode.gain.value = volSlider.value;
+    }
 }
 
 function createAudioNodes() {
-    // create an oscillator
-    osc = ctx.createOscillator();
-    // make it a sin wave
-    osc.type = "sine";
-    // its frequency is 440Hz
-    osc.frequency.value = 440;
+   createOscillator();
 
     // create a gain node
     gainNode = ctx.createGain();
@@ -51,6 +64,14 @@ function createAudioNodes() {
     pannerNode.pan.value = 0;
 }
 
+function createOscillator() {
+ // create an oscillator
+ osc = ctx.createOscillator();
+ // make it a sin wave
+ osc.type = "sine";
+ // its frequency is 440Hz
+ osc.frequency.value = 440;
+}
 function buildAudioGraph() {
     // here we're going to create the audio graph
     // i.e connect the nodes together
@@ -66,6 +87,11 @@ function buildAudioGraph() {
 }
 
 function start() {
+    // recreate the oscillator
+    createOscillator();
+    // connect it to the gain node again
+    osc.connect(gainNode);
+    
     // start the oscillator
     osc.start();
 }
