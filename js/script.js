@@ -14,6 +14,21 @@ function init() {
 
     createAudioNodes();
     buildAudioGraph();
+
+    defineListeners();
+}
+
+function defineListeners() {
+    const startButton = document.querySelector("#startButton");
+    const stopButton = document.querySelector("#stopButton");
+
+    startButton.onclick = () => {
+        start();
+    }
+
+    stopButton.onclick = () => {
+        stop();
+    }
 }
 
 function createAudioNodes() {
