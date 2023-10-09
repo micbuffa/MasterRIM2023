@@ -41,12 +41,18 @@ function defineListeners() {
     }
 
     // for changing the volume
-    // for changing the frequency
     const volSlider = document.querySelector("#volSlider");
-    // when the slider changes, update the oscillator frequency
+    // when the slider changes, update the volume 
     volSlider.oninput = (event) => {
         gainNode.gain.value = volSlider.value;
     }
+
+       // for changing the pzn left/right
+       const panSlider = document.querySelector("#panSlider");
+       // when the slider changes, update the panning
+       panSlider.oninput = (event) => {
+           pannerNode.pan.value = volSlider.value;
+       }
 }
 
 function createAudioNodes() {
